@@ -15,21 +15,21 @@ include 'views/layout/sidebar.php';
 <div class="row g-4 mb-4">
     <div class="col-md-4">
         <div class="stat-card">
-            <div class="stat-icon icon-blue"><i class="ph-bold ph-cube"></i></div>
+            <div class="stat-icon icon-blue"><i class="ph-duotone ph-package" style="font-size: 1.2em;"></i></div>
             <div class="stat-label">Total Barang</div>
             <div class="stat-value" id="stat-total-items">...</div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="stat-card">
-            <div class="stat-icon icon-green"><i class="ph-bold ph-tag"></i></div>
+            <div class="stat-icon icon-green"><i class="ph-duotone ph-squares-four" style="font-size: 1.2em;"></i></div>
             <div class="stat-label">Total Kategori</div>
             <div class="stat-value" id="stat-total-categories">...</div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="stat-card">
-            <div class="stat-icon icon-red"><i class="ph-bold ph-warning"></i></div>
+            <div class="stat-icon icon-red"><i class="ph-duotone ph-warning-circle" style="font-size: 1.2em;"></i></div>
             <div class="stat-label">Stok Rendah (< 10)</div>
             <div class="stat-value" id="stat-low-stock">...</div>
         </div>
