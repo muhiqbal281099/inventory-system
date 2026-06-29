@@ -71,7 +71,9 @@ include 'views/layout/sidebar.php';
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', async () => {
+    let categoryChartInstance = null;
+
+    async function loadDashboardData() {
         try {
             const response = await fetch('api/stats.php');
             const data = await response.json();
@@ -94,24 +96,37 @@ include 'views/layout/sidebar.php';
             tbody.innerHTML = html || '<tr><td colspan="4" class="text-center py-4">Belum ada barang</td></tr>';
             
             // Update Chart
-            new Chart(document.getElementById('categoryChart'), {
-                type: 'doughnut',
-                data: {
-                    labels: data.chart_labels,
-                    datasets: [{
-                        data: data.chart_data,
-                        backgroundColor: ['#2563EB', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } },
-                    cutout: '70%'
-                }
-            });
+            if (categoryChartInstance) {
+                categoryChartInstance.data.labels = data.chart_labels;
+                categoryChartInstance.data.datasets[0].data = data.chart_data;
+                categoryChartInstance.update();
+            } else {
+                categoryChartInstance = new Chart(document.getElementById('categoryChart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: data.chart_labels,
+                        datasets: [{
+                            data: data.chart_data,
+                            backgroundColor: ['#2563EB', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom' } },
+                        cutout: '70%',
+                        animation: categoryChartInstance ? false : true // Animate only on first load
+                    }
+                });
+            }
         } catch (err) { console.error(err); }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadDashboardData();
+        // Update automatically every 5 seconds
+        setInterval(loadDashboardData, 5000);
     });
 </script>
 
