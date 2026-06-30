@@ -13,8 +13,13 @@ include 'views/layout/header.php'; include 'views/layout/sidebar.php';
 </div>
 
 <div class="table-card">
-    <div class="table-header flex-column flex-md-row gap-3">
-    <!-- Search has been replaced by DataTables built-in search -->
+    <div class="table-header d-flex flex-column flex-md-row gap-3">
+        <div class="d-flex w-100">
+            <select class="form-select" id="categoryFilter" style="max-width: 250px;" onchange="loadItems()">
+                <option value="">Semua Kategori</option>
+            </select>
+        </div>
+    </div>
     <div class="table-responsive mt-3">
         <table id="itemsTable" class="table table-hover mb-0 w-100">
             <thead>
