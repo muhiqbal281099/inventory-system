@@ -103,7 +103,7 @@ include 'views/staff/sidebar.php';
 
         if(res.ok) {
             Swal.fire('Berhasil!', 'Barang telah dikirim ke toko.', 'success').then(() => {
-                window.location.href = 'history.php';
+                window.location.href = 'index.php?p=history';
             });
         } else {
             const err = await res.json();

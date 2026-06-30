@@ -60,7 +60,7 @@ include 'views/admin/sidebar.php';
 
         if(res.ok) {
             Swal.fire('Berhasil!', 'Stok barang masuk berhasil ditambahkan.', 'success').then(() => {
-                window.location.href = 'history.php';
+                window.location.href = 'index.php?p=history';
             });
         }
     });

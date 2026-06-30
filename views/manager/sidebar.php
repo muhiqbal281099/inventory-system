@@ -9,7 +9,7 @@
         <ul class="nav-list">
             <!-- MAIN -->
             <li class="nav-item">
-                <a href="dashboard.php" class="nav-link <?php echo $active_menu == 'dashboard' ? 'active' : ''; ?>">
+                <a href="index.php?p=dashboard" class="nav-link <?php echo $active_menu == 'dashboard' ? 'active' : ''; ?>">
                     <i class="ph-fill ph-house"></i> Dashboard
                 </a>
             </li>
@@ -22,23 +22,23 @@
                 
             </li>
             <li class="nav-item">
-                <a href="items.php" class="nav-link <?php echo $active_menu == 'items' ? 'active' : ''; ?>">
+                <a href="index.php?p=items" class="nav-link <?php echo $active_menu == 'items' ? 'active' : ''; ?>">
                     <i class="ph-fill ph-cube"></i> Data Barang
                 </a>
             </li>
                 <li class="nav-item">
-                    <a href="restock.php" class="nav-link <?= $active_menu == 'restock' ? 'active' : '' ?>">
+                    <a href="index.php?p=restock" class="nav-link <?= $active_menu == 'restock' ? 'active' : '' ?>">
                         <i class="ph ph-download-simple"></i>
                         <span>Barang Masuk</span>
                     </a>
                 </li>
             <li class="nav-item">
-                <a href="warehouses.php" class="nav-link <?php echo $active_menu == 'warehouses' ? 'active' : ''; ?>">
+                <a href="index.php?p=warehouses" class="nav-link <?php echo $active_menu == 'warehouses' ? 'active' : ''; ?>">
                     <i class="ph-fill ph-factory"></i> Data Gudang
                 </a>
             </li>
             <li class="nav-item">
-                <a href="stores.php" class="nav-link <?php echo $active_menu == 'stores' ? 'active' : ''; ?>">
+                <a href="index.php?p=stores" class="nav-link <?php echo $active_menu == 'stores' ? 'active' : ''; ?>">
                     <i class="ph-fill ph-storefront"></i> Data Toko
                 </a>
             </li>
@@ -48,12 +48,12 @@
                 Pusat Logistik
             </li>
             <li class="nav-item">
-                <a href="transfer.php" class="nav-link <?php echo $active_menu == 'transfer' ? 'active' : ''; ?>">
+                <a href="index.php?p=transfer" class="nav-link <?php echo $active_menu == 'transfer' ? 'active' : ''; ?>">
                     <i class="ph-fill ph-truck"></i> Kirim Barang
                 </a>
             </li>
             <li class="nav-item">
-                <a href="history.php" class="nav-link <?php echo $active_menu == 'history' ? 'active' : ''; ?>">
+                <a href="index.php?p=history" class="nav-link <?php echo $active_menu == 'history' ? 'active' : ''; ?>">
                     <i class="ph-fill ph-clock-counter-clockwise"></i> Riwayat Stok
                 </a>
             </li>

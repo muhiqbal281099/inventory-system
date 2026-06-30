@@ -169,7 +169,7 @@
                 try {
                     const result = JSON.parse(text);
                     if (response.ok) {
-                        window.location.href = 'dashboard.php';
+                        window.location.href = 'index.php?p=dashboard';
                     } else {
                         alert.textContent = result.message || 'Login failed';
                         alert.style.display = 'block';
