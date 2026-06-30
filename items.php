@@ -89,6 +89,25 @@ include 'views/layout/header.php'; include 'views/layout/sidebar.php';
     </div>
 </div>
 
+<!-- BARCODE MODAL -->
+<div class="modal fade" id="barcodeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Label Barcode</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center" id="printableBarcode">
+                <h6 id="barcodeItemName" class="fw-bold mb-2" style="font-size:0.85rem;"></h6>
+                <svg id="barcodeCanvas"></svg>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-dark w-100" onclick="printBarcode()"><i class="ph-bold ph-printer me-2"></i> Print Barcode</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     let items = [];
     let dataTableInst = null;
@@ -98,6 +117,29 @@ include 'views/layout/header.php'; include 'views/layout/sidebar.php';
         loadOptions();
         loadItems();
     });
+
+    function showBarcode(id) {
+        const item = items.find(i => i.id == id);
+        document.getElementById('barcodeItemName').textContent = item.nama_barang;
+        JsBarcode("#barcodeCanvas", item.kode_barang, {
+            format: "CODE128",
+            width: 2,
+            height: 60,
+            displayValue: true
+        });
+        new bootstrap.Modal(document.getElementById('barcodeModal')).show();
+    }
+
+    function printBarcode() {
+        const printContent = document.getElementById('printableBarcode').innerHTML;
+        const originalContent = document.body.innerHTML;
+        document.body.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh;">
+            <div style="text-align:center;">${printContent}</div>
+        </div>`;
+        window.print();
+        document.body.innerHTML = originalContent;
+        window.location.reload();
+    }
 
     async function loadOptions() {
         const [catsRes, warehousesRes] = await Promise.all([
@@ -149,7 +191,8 @@ include 'views/layout/header.php'; include 'views/layout/sidebar.php';
                 <td><span class="fw-bold ${item.stok < 10 ? 'text-danger' : ''}">${item.stok}</span></td>
                 <td>${item.tanggal_masuk}</td>
                 <td>
-                    <button class="btn btn-action btn-light" onclick="editItem(${item.id})"><i class="ph ph-pencil"></i></button>
+                    <button class="btn btn-action btn-light text-dark" title="Cetak Barcode" onclick="showBarcode(${item.id})"><i class="ph ph-barcode"></i></button>
+                    <button class="btn btn-action btn-light text-primary" title="Edit" onclick="editItem(${item.id})"><i class="ph ph-pencil"></i></button>
                     ${deleteBtn}
                 </td>
             </tr>`;

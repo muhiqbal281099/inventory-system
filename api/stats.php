@@ -34,9 +34,13 @@ $itemsStmt = $item->read();
 $lowStock = 0;
 $latestItems = [];
 $catDistribution = [];
+$lowStockItems = [];
 
 while ($row = $itemsStmt->fetch(PDO::FETCH_ASSOC)) {
-    if($row['stok'] < 10) $lowStock++;
+    if($row['stok'] < 10) {
+        $lowStock++;
+        if(count($lowStockItems) < 10) $lowStockItems[] = $row;
+    }
     
     // Distribution for chart
     $catName = $row['nama_kategori'] ?? 'Tanpa Kategori';
@@ -52,6 +56,7 @@ echo json_encode(array(
     "total_items" => $totalItems,
     "total_categories" => $totalCategories,
     "low_stock" => $lowStock,
+    "low_stock_items" => $lowStockItems,
     "latest_items" => $latestItems,
     "chart_labels" => array_keys($catDistribution),
     "chart_data" => array_values($catDistribution)

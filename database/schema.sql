@@ -59,14 +59,17 @@ CREATE TABLE IF NOT EXISTS stock_movements (
     type ENUM('IN', 'OUT', 'TRANSFER') NOT NULL,
     qty INT NOT NULL,
     keterangan TEXT,
+    status ENUM('PENDING', 'APPROVED', 'REJECTED') DEFAULT 'APPROVED',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE,
     FOREIGN KEY (store_id) REFERENCES stores(id) ON DELETE SET NULL
 );
 
 -- Initial Data
-INSERT INTO users (username, password, nama) VALUES 
-('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator');
+INSERT INTO users (username, password, nama, role) VALUES 
+('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator', 'Administrator'),
+('manager', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kepala Cabang / Manager', 'Manager'),
+('staff', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Staf Gudang', 'Staff Gudang');
 
 INSERT INTO categories (nama_kategori) VALUES 
 ('Elektronik'), ('Furniture'), ('Alat Tulis'), ('Pakaian'), ('Otomotif');

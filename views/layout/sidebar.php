@@ -76,6 +76,18 @@
             </div>
             <div class="user-profile dropdown">
                 <div class="d-flex align-items-center gap-3">
+                    <div class="dropdown me-2">
+                        <button class="btn btn-light position-relative rounded-circle p-2 d-flex align-items-center justify-content-center" type="button" data-bs-toggle="dropdown" id="btnNotif">
+                            <i class="ph ph-bell fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notifBadge" style="display: none; font-size:0.6rem;">0</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end p-0 shadow border-0 overflow-hidden" style="width: 320px;" id="notifList">
+                            <li class="bg-primary text-white px-3 py-2 fw-bold" style="font-size:0.85rem;">Notifikasi Sistem</li>
+                            <div id="notifItems" style="max-height: 300px; overflow-y: auto;">
+                                <li><span class="dropdown-item text-center text-muted py-3" style="font-size:0.85rem;">Tidak ada notifikasi</span></li>
+                            </div>
+                        </ul>
+                    </div>
                     <div class="text-end d-none d-md-block">
                         <span class="fw-bold d-block small"><?php echo $_SESSION['nama'] ?? 'Admin'; ?></span>
                         <span class="text-muted small" style="text-transform: capitalize;"><?php echo $_SESSION['role'] ?? 'Staff Gudang'; ?></span>

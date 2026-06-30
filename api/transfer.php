@@ -16,13 +16,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $movement->qty = $data->qty;
         $movement->type = 'TRANSFER';
         $movement->keterangan = "Transfer ke " . ($data->store_name ?? 'toko');
+        $movement->status = 'PENDING';
 
         if($movement->create()) {
-            echo json_encode(["message" => "Transfer Berhasil"]);
+            echo json_encode(["message" => "Transfer Berhasil (Menunggu Approval)"]);
         } else {
             http_response_code(500);
             echo json_encode(["message" => "Gagal melakukan transfer"]);
         }
+    }
+} else if($_SERVER['REQUEST_METHOD'] == 'PUT') {
+    $action = $data->action ?? '';
+    $id = $data->id ?? '';
+    if ($action == 'approve' && $movement->approve($id)) {
+        echo json_encode(["message" => "Transfer disetujui, stok berhasil diproses."]);
+    } else if ($action == 'reject' && $movement->reject($id)) {
+        echo json_encode(["message" => "Transfer ditolak."]);
+    } else {
+        http_response_code(400);
+        echo json_encode(["message" => "Gagal memproses approval."]);
     }
 } else if($_SERVER['REQUEST_METHOD'] == 'GET') {
     $stmt = $movement->readAll();
