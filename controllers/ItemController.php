@@ -23,8 +23,8 @@ class ItemController {
             $this->item->kode_barang = $data->kode_barang;
             $this->item->nama_barang = $data->nama_barang;
             $this->item->kategori_id = $data->kategori_id;
+            $this->item->warehouse_id = $data->warehouse_id ?? null;
             $this->item->stok = $data->stok;
-            $this->item->lokasi = $data->lokasi;
             $this->item->tanggal_masuk = $data->tanggal_masuk;
             return $this->item->create();
         }
@@ -37,8 +37,8 @@ class ItemController {
             $this->item->kode_barang = $data->kode_barang;
             $this->item->nama_barang = $data->nama_barang;
             $this->item->kategori_id = $data->kategori_id;
+            $this->item->warehouse_id = $data->warehouse_id ?? null;
             $this->item->stok = $data->stok;
-            $this->item->lokasi = $data->lokasi;
             $this->item->tanggal_masuk = $data->tanggal_masuk;
             return $this->item->update();
         }
