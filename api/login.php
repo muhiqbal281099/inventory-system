@@ -31,6 +31,7 @@ if(!empty($data->username) && !empty($data->password)) {
             $_SESSION['user_id'] = $user->id;
             $_SESSION['username'] = $user->username;
             $_SESSION['nama'] = $user->nama;
+            $_SESSION['role'] = $user->role;
             
             http_response_code(200);
             echo json_encode(array(
@@ -38,7 +39,8 @@ if(!empty($data->username) && !empty($data->password)) {
                 "user" => array(
                     "id" => $user->id,
                     "username" => $user->username,
-                    "nama" => $user->nama
+                    "nama" => $user->nama,
+                    "role" => $user->role
                 )
             ));
         } else {

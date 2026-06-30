@@ -14,18 +14,9 @@ include 'views/layout/header.php'; include 'views/layout/sidebar.php';
 
 <div class="table-card">
     <div class="table-header flex-column flex-md-row gap-3">
-        <div class="d-flex gap-2 w-100">
-            <div class="input-group" style="max-width: 300px;">
-                <span class="input-group-text bg-white border-end-0"><i class="ph ph-magnifying-glass"></i></span>
-                <input type="text" class="form-control border-start-0" id="itemSearch" placeholder="Cari barang..." onkeyup="loadItems()">
-            </div>
-            <select class="form-select" id="categoryFilter" style="max-width: 200px;" onchange="loadItems()">
-                <option value="">Semua Kategori</option>
-            </select>
-        </div>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-hover mb-0">
+    <!-- Search has been replaced by DataTables built-in search -->
+    <div class="table-responsive mt-3">
+        <table id="itemsTable" class="table table-hover mb-0 w-100">
             <thead>
                 <tr>
                     <th>Kode</th>
@@ -95,6 +86,9 @@ include 'views/layout/header.php'; include 'views/layout/sidebar.php';
 
 <script>
     let items = [];
+    let dataTableInst = null;
+    let userRole = '<?php echo $_SESSION["role"] ?? "Staff Gudang"; ?>';
+
     document.addEventListener('DOMContentLoaded', () => {
         loadOptions();
         loadItems();
@@ -127,17 +121,21 @@ include 'views/layout/header.php'; include 'views/layout/sidebar.php';
     }
 
     async function loadItems() {
-        const search = document.getElementById('itemSearch').value;
         const cat = document.getElementById('categoryFilter').value;
-        const res = await fetch(`api/items.php?search=${search}&category=${cat}`);
+        const res = await fetch(`api/items.php?category=${cat}`);
         items = await res.json();
         renderItems();
     }
 
     function renderItems() {
+        if(dataTableInst) { dataTableInst.destroy(); }
+        
         const tbody = document.getElementById('items-body');
         let html = '';
         items.forEach(item => {
+            let deleteBtn = userRole === 'Administrator' ? 
+                `<button class="btn btn-action btn-light text-danger" onclick="deleteItem(${item.id})"><i class="ph ph-trash"></i></button>` : '';
+
             html += `<tr>
                 <td><span class="fw-bold text-primary">${item.kode_barang}</span></td>
                 <td>${item.nama_barang}</td>
@@ -147,11 +145,22 @@ include 'views/layout/header.php'; include 'views/layout/sidebar.php';
                 <td>${item.tanggal_masuk}</td>
                 <td>
                     <button class="btn btn-action btn-light" onclick="editItem(${item.id})"><i class="ph ph-pencil"></i></button>
-                    <button class="btn btn-action btn-light text-danger" onclick="deleteItem(${item.id})"><i class="ph ph-trash"></i></button>
+                    ${deleteBtn}
                 </td>
             </tr>`;
         });
-        tbody.innerHTML = html || '<tr><td colspan="7" class="text-center py-4">Tidak ada data</td></tr>';
+        tbody.innerHTML = html;
+        
+        dataTableInst = $('#itemsTable').DataTable({
+            dom: '<"row align-items-center mb-3"<"col-md-6"B><"col-md-6"f>>rt<"row align-items-center mt-3"<"col-md-6"i><"col-md-6"p>>',
+            buttons: [
+                { extend: 'excel', className: 'btn btn-sm btn-success', text: '<i class="ph-bold ph-file-xls me-1"></i> Excel' },
+                { extend: 'pdf', className: 'btn btn-sm btn-danger', text: '<i class="ph-bold ph-file-pdf me-1"></i> PDF' },
+                { extend: 'print', className: 'btn btn-sm btn-info text-white', text: '<i class="ph-bold ph-printer me-1"></i> Print' }
+            ],
+            language: { search: "_INPUT_", searchPlaceholder: "Cari data..." },
+            pageLength: 10
+        });
     }
 
     document.getElementById('itemForm').addEventListener('submit', async (e) => {

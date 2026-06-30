@@ -78,7 +78,7 @@
                 <div class="d-flex align-items-center gap-3">
                     <div class="text-end d-none d-md-block">
                         <span class="fw-bold d-block small"><?php echo $_SESSION['nama'] ?? 'Admin'; ?></span>
-                        <span class="text-muted small">Administrator</span>
+                        <span class="text-muted small" style="text-transform: capitalize;"><?php echo $_SESSION['role'] ?? 'Staff Gudang'; ?></span>
                     </div>
                     <img src="https://ui-avatars.com/api/?name=<?php echo $_SESSION['nama']; ?>&background=2563EB&color=fff" alt="Avatar" class="rounded-3" style="width: 40px; height: 40px;">
                 </div>
